@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Database_CadastroModelStoreContainer" CdmEntityContainer="Database_CadastroEntities4">
+    <EntitySetMapping Name="TB_CLIENTE">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_CLIENTE">
+        <MappingFragment StoreEntitySet="TB_CLIENTE">
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="telefone" ColumnName="telefone" />
+          <ScalarProperty Name="celular" ColumnName="celular" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_ENDERECO">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_ENDERECO">
+        <MappingFragment StoreEntitySet="TB_ENDERECO">
+          <ScalarProperty Name="cep" ColumnName="cep" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="logradouro" ColumnName="logradouro" />
+          <ScalarProperty Name="numero" ColumnName="numero" />
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="bairro" ColumnName="bairro" />
+          <ScalarProperty Name="cpf_cli" ColumnName="cpf_cli" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_META">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_META">
+        <MappingFragment StoreEntitySet="TB_META">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="cod_vendedor" ColumnName="cod_vendedor" />
+          <ScalarProperty Name="periodo_ini" ColumnName="periodo_ini" />
+          <ScalarProperty Name="periodo_fim" ColumnName="periodo_fim" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_PRODUTO">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_PRODUTO">
+        <MappingFragment StoreEntitySet="TB_PRODUTO">
+          <ScalarProperty Name="mime" ColumnName="mime" />
+          <ScalarProperty Name="foto" ColumnName="foto" />
+          <ScalarProperty Name="qtd_produto" ColumnName="qtd_produto" />
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="grupo" ColumnName="grupo" />
+          <ScalarProperty Name="custo" ColumnName="custo" />
+          <ScalarProperty Name="valor_final" ColumnName="valor_final" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_TABELAPRECO">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_TABELAPRECO">
+        <MappingFragment StoreEntitySet="TB_TABELAPRECO">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="cod_produto" ColumnName="cod_produto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_VENDA">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_VENDA">
+        <MappingFragment StoreEntitySet="TB_VENDA">
+          <ScalarProperty Name="codigo_produto" ColumnName="codigo_produto" />
+          <ScalarProperty Name="codigo_cli" ColumnName="codigo_cli" />
+          <ScalarProperty Name="qtd_produto" ColumnName="qtd_produto" />
+          <ScalarProperty Name="desconto" ColumnName="desconto" />
+          <ScalarProperty Name="total" ColumnName="total" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="id_" ColumnName="id " />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_VENDEDOR">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_VENDEDOR">
+        <MappingFragment StoreEntitySet="TB_VENDEDOR">
+          <ScalarProperty Name="codigo" ColumnName="codigo" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+          <ScalarProperty Name="cpf" ColumnName="cpf" />
+          <ScalarProperty Name="email" ColumnName="email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TB_GRUPO">
+      <EntityTypeMapping TypeName="Database_CadastroModel.TB_GRUPO">
+        <MappingFragment StoreEntitySet="TB_GRUPO">
+          <ScalarProperty Name="descricao" ColumnName="descricao" />
+          <ScalarProperty Name="nome" ColumnName="nome" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

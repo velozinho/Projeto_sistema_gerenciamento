@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database_CadastroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="TB_CLIENTE">
+    <Key>
+      <PropertyRef Name="cpf" />
+    </Key>
+    <Property Name="cpf" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefone" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="celular" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_ENDERECO">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="logradouro" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="numero" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="bairro" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="cpf_cli" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="cep" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_GRUPO">
+    <Key>
+      <PropertyRef Name="nome" />
+    </Key>
+    <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_META">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="valor" Type="float" Nullable="false" />
+    <Property Name="cod_vendedor" Type="int" Nullable="false" />
+    <Property Name="periodo_ini" Type="datetime2" Precision="7" />
+    <Property Name="periodo_fim" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="TB_PRODUTO">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="grupo" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="custo" Type="float" Nullable="false" />
+    <Property Name="valor_final" Type="float" Nullable="false" />
+    <Property Name="qtd_produto" Type="int" />
+    <Property Name="foto" Type="image" />
+    <Property Name="mime" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_TABELAPRECO">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="valor" Type="float" Nullable="false" />
+    <Property Name="cod_produto" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="TB_VENDA">
+    <Key>
+      <PropertyRef Name="id " />
+    </Key>
+    <Property Name="codigo_produto" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="codigo_cli" Type="int" Nullable="false" />
+    <Property Name="qtd_produto" Type="int" Nullable="false" />
+    <Property Name="desconto" Type="int" Nullable="false" />
+    <Property Name="total" Type="float" Nullable="false" />
+    <Property Name="data" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+    <Property Name="id " Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TB_VENDEDOR">
+    <Key>
+      <PropertyRef Name="codigo" />
+    </Key>
+    <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nome" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="cpf" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Table_vendedor">
+    <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="1" />
+    <End Role="TB_META" Type="Self.TB_META" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_VENDEDOR">
+        <PropertyRef Name="codigo" />
+      </Principal>
+      <Dependent Role="TB_META">
+        <PropertyRef Name="cod_vendedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TB_ENDERECO_cliente">
+    <End Role="TB_CLIENTE" Type="Self.TB_CLIENTE" Multiplicity="1" />
+    <End Role="TB_ENDERECO" Type="Self.TB_ENDERECO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TB_CLIENTE">
+        <PropertyRef Name="cpf" />
+      </Principal>
+      <Dependent Role="TB_ENDERECO">
+        <PropertyRef Name="cpf_cli" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Database_CadastroModelStoreContainer">
+    <EntitySet Name="TB_CLIENTE" EntityType="Self.TB_CLIENTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_ENDERECO" EntityType="Self.TB_ENDERECO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_GRUPO" EntityType="Self.TB_GRUPO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_META" EntityType="Self.TB_META" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_TABELAPRECO" EntityType="Self.TB_TABELAPRECO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_VENDA" EntityType="Self.TB_VENDA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Table_vendedor" Association="Self.FK_Table_vendedor">
+      <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
+      <End Role="TB_META" EntitySet="TB_META" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TB_ENDERECO_cliente" Association="Self.FK_TB_ENDERECO_cliente">
+      <End Role="TB_CLIENTE" EntitySet="TB_CLIENTE" />
+      <End Role="TB_ENDERECO" EntitySet="TB_ENDERECO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

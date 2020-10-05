@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Database_CadastroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="TB_CLIENTE">
+          <Key>
+            <PropertyRef Name="cpf" />
+          </Key>
+          <Property Name="cpf" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="telefone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="celular" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_ENDERECO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="logradouro" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="numero" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="estado" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bairro" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cpf_cli" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="cep" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_GRUPO">
+          <Key>
+            <PropertyRef Name="nome" />
+          </Key>
+          <Property Name="nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_META">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="valor" Type="float" Nullable="false" />
+          <Property Name="cod_vendedor" Type="int" Nullable="false" />
+          <Property Name="periodo_ini" Type="datetime2" Precision="7" />
+          <Property Name="periodo_fim" Type="datetime2" Precision="7" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="grupo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="custo" Type="float" Nullable="false" />
+          <Property Name="valor_final" Type="float" Nullable="false" />
+          <Property Name="qtd_produto" Type="int" />
+          <Property Name="foto" Type="image" />
+          <Property Name="mime" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_TABELAPRECO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descricao" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="valor" Type="float" Nullable="false" />
+          <Property Name="cod_produto" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="TB_VENDA">
+          <Key>
+            <PropertyRef Name="id " />
+          </Key>
+          <Property Name="codigo_produto" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="codigo_cli" Type="int" Nullable="false" />
+          <Property Name="qtd_produto" Type="int" Nullable="false" />
+          <Property Name="desconto" Type="int" Nullable="false" />
+          <Property Name="total" Type="float" Nullable="false" />
+          <Property Name="data" Type="timestamp" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="id " Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_VENDEDOR">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="cpf" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Table_vendedor">
+          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="1" />
+          <End Role="TB_META" Type="Self.TB_META" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_VENDEDOR">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="TB_META">
+              <PropertyRef Name="cod_vendedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TB_ENDERECO_cliente">
+          <End Role="TB_CLIENTE" Type="Self.TB_CLIENTE" Multiplicity="1" />
+          <End Role="TB_ENDERECO" Type="Self.TB_ENDERECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CLIENTE">
+              <PropertyRef Name="cpf" />
+            </Principal>
+            <Dependent Role="TB_ENDERECO">
+              <PropertyRef Name="cpf_cli" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database_CadastroModelStoreContainer">
+          <EntitySet Name="TB_CLIENTE" EntityType="Self.TB_CLIENTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_ENDERECO" EntityType="Self.TB_ENDERECO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_GRUPO" EntityType="Self.TB_GRUPO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_META" EntityType="Self.TB_META" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_TABELAPRECO" EntityType="Self.TB_TABELAPRECO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_VENDA" EntityType="Self.TB_VENDA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Table_vendedor" Association="Self.FK_Table_vendedor">
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
+            <End Role="TB_META" EntitySet="TB_META" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TB_ENDERECO_cliente" Association="Self.FK_TB_ENDERECO_cliente">
+            <End Role="TB_CLIENTE" EntitySet="TB_CLIENTE" />
+            <End Role="TB_ENDERECO" EntitySet="TB_ENDERECO" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database_CadastroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TB_CLIENTE">
+          <Key>
+            <PropertyRef Name="cpf" />
+          </Key>
+          <Property Name="cpf" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="nome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="telefone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="celular" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TB_ENDERECO" Relationship="Self.FK_TB_ENDERECO_cliente" FromRole="TB_CLIENTE" ToRole="TB_ENDERECO" />
+        </EntityType>
+        <EntityType Name="TB_ENDERECO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="logradouro" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="numero" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bairro" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cpf_cli" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TB_CLIENTE" Relationship="Self.FK_TB_ENDERECO_cliente" FromRole="TB_ENDERECO" ToRole="TB_CLIENTE" />
+          <Property Name="cep" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_META">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="valor" Type="Double" Nullable="false" />
+          <Property Name="cod_vendedor" Type="Int32" Nullable="false" />
+          <Property Name="periodo_ini" Type="DateTime" Precision="7" />
+          <Property Name="periodo_fim" Type="DateTime" Precision="7" />
+          <NavigationProperty Name="TB_VENDEDOR" Relationship="Self.FK_Table_vendedor" FromRole="TB_META" ToRole="TB_VENDEDOR" />
+        </EntityType>
+        <EntityType Name="TB_PRODUTO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="grupo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="custo" Type="Double" Nullable="false" />
+          <Property Name="valor_final" Type="Double" Nullable="false" />
+          <Property Name="qtd_produto" Type="Int32" />
+          <Property Name="foto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="mime" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_TABELAPRECO">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descricao" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="valor" Type="Double" Nullable="false" />
+          <Property Name="cod_produto" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TB_VENDA">
+          <Key>
+            <PropertyRef Name="id_" />
+          </Key>
+          <Property Name="codigo_produto" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="codigo_cli" Type="Int32" Nullable="false" />
+          <Property Name="qtd_produto" Type="Int32" Nullable="false" />
+          <Property Name="desconto" Type="Int32" Nullable="false" />
+          <Property Name="total" Type="Double" Nullable="false" />
+          <Property Name="data" Type="Binary" MaxLength="8" FixedLength="true" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="id_" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TB_VENDEDOR">
+          <Key>
+            <PropertyRef Name="codigo" />
+          </Key>
+          <Property Name="codigo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nome" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="cpf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="TB_META" Relationship="Self.FK_Table_vendedor" FromRole="TB_VENDEDOR" ToRole="TB_META" />
+        </EntityType>
+        <Association Name="FK_TB_ENDERECO_cliente">
+          <End Role="TB_CLIENTE" Type="Self.TB_CLIENTE" Multiplicity="1" />
+          <End Role="TB_ENDERECO" Type="Self.TB_ENDERECO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_CLIENTE">
+              <PropertyRef Name="cpf" />
+            </Principal>
+            <Dependent Role="TB_ENDERECO">
+              <PropertyRef Name="cpf_cli" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_vendedor">
+          <End Role="TB_VENDEDOR" Type="Self.TB_VENDEDOR" Multiplicity="1" />
+          <End Role="TB_META" Type="Self.TB_META" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TB_VENDEDOR">
+              <PropertyRef Name="codigo" />
+            </Principal>
+            <Dependent Role="TB_META">
+              <PropertyRef Name="cod_vendedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database_CadastroEntities4" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TB_CLIENTE" EntityType="Self.TB_CLIENTE" />
+          <EntitySet Name="TB_ENDERECO" EntityType="Self.TB_ENDERECO" />
+          <EntitySet Name="TB_META" EntityType="Self.TB_META" />
+          <EntitySet Name="TB_PRODUTO" EntityType="Self.TB_PRODUTO" />
+          <EntitySet Name="TB_TABELAPRECO" EntityType="Self.TB_TABELAPRECO" />
+          <EntitySet Name="TB_VENDA" EntityType="Self.TB_VENDA" />
+          <EntitySet Name="TB_VENDEDOR" EntityType="Self.TB_VENDEDOR" />
+          <AssociationSet Name="FK_TB_ENDERECO_cliente" Association="Self.FK_TB_ENDERECO_cliente">
+            <End Role="TB_CLIENTE" EntitySet="TB_CLIENTE" />
+            <End Role="TB_ENDERECO" EntitySet="TB_ENDERECO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_vendedor" Association="Self.FK_Table_vendedor">
+            <End Role="TB_VENDEDOR" EntitySet="TB_VENDEDOR" />
+            <End Role="TB_META" EntitySet="TB_META" />
+          </AssociationSet>
+          <EntitySet Name="TB_GRUPO" EntityType="Database_CadastroModel.TB_GRUPO" />
+        </EntityContainer>
+        <EntityType Name="TB_GRUPO">
+          <Key>
+            <PropertyRef Name="nome" />
+          </Key>
+          <Property Name="nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descricao" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database_CadastroModelStoreContainer" CdmEntityContainer="Database_CadastroEntities4">
+          <EntitySetMapping Name="TB_CLIENTE">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_CLIENTE">
+              <MappingFragment StoreEntitySet="TB_CLIENTE">
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="telefone" ColumnName="telefone" />
+                <ScalarProperty Name="celular" ColumnName="celular" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_ENDERECO">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_ENDERECO">
+              <MappingFragment StoreEntitySet="TB_ENDERECO">
+                <ScalarProperty Name="cep" ColumnName="cep" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="logradouro" ColumnName="logradouro" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="bairro" ColumnName="bairro" />
+                <ScalarProperty Name="cpf_cli" ColumnName="cpf_cli" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_META">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_META">
+              <MappingFragment StoreEntitySet="TB_META">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="cod_vendedor" ColumnName="cod_vendedor" />
+                <ScalarProperty Name="periodo_ini" ColumnName="periodo_ini" />
+                <ScalarProperty Name="periodo_fim" ColumnName="periodo_fim" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_PRODUTO">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_PRODUTO">
+              <MappingFragment StoreEntitySet="TB_PRODUTO">
+                <ScalarProperty Name="mime" ColumnName="mime" />
+                <ScalarProperty Name="foto" ColumnName="foto" />
+                <ScalarProperty Name="qtd_produto" ColumnName="qtd_produto" />
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="grupo" ColumnName="grupo" />
+                <ScalarProperty Name="custo" ColumnName="custo" />
+                <ScalarProperty Name="valor_final" ColumnName="valor_final" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_TABELAPRECO">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_TABELAPRECO">
+              <MappingFragment StoreEntitySet="TB_TABELAPRECO">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="cod_produto" ColumnName="cod_produto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_VENDA">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_VENDA">
+              <MappingFragment StoreEntitySet="TB_VENDA">
+                <ScalarProperty Name="codigo_produto" ColumnName="codigo_produto" />
+                <ScalarProperty Name="codigo_cli" ColumnName="codigo_cli" />
+                <ScalarProperty Name="qtd_produto" ColumnName="qtd_produto" />
+                <ScalarProperty Name="desconto" ColumnName="desconto" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="id_" ColumnName="id " />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_VENDEDOR">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_VENDEDOR">
+              <MappingFragment StoreEntitySet="TB_VENDEDOR">
+                <ScalarProperty Name="codigo" ColumnName="codigo" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+                <ScalarProperty Name="cpf" ColumnName="cpf" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TB_GRUPO">
+            <EntityTypeMapping TypeName="Database_CadastroModel.TB_GRUPO">
+              <MappingFragment StoreEntitySet="TB_GRUPO">
+                <ScalarProperty Name="descricao" ColumnName="descricao" />
+                <ScalarProperty Name="nome" ColumnName="nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
